@@ -1,0 +1,141 @@
+<% content_for :menu do -%>
+  <div id="menu">
+    User: <b><%= current_user.username %></b>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+   <%= link_to 'IA の分析結果を確認', ia_result_details_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to "ログアウト", [:destroy, :user_session] %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="content_no_sidebar">
+  <%= content_tag :div, :id => 'notice' do -%>
+    <p><%= flash[:notice] %></p>
+  <% end if flash[:notice] -%>
+
+  <h3>追加認証 セキュリティプロファイル編集</h3>
+  <%= link_to image_tag("SYM_VIP_3L_RGB.jpg", :style=>"text-align:right; float:right; margin-right:200px;") -%>
+  <p>追加認証で使用する認証方式を登録して下さい。</br></p>
+  <%= form_for(@user, :url => { :action => 'create' }) do |f| %>
+    <!-- VIP Security Token -->
+    <%= fields_for :token_profile do |token_profile| %>
+    <div class="edit_options_head">
+      <%= token_profile.check_box :auth_type, { :onclick => "Effect.toggle($('token_profile_box'),'appear');" }, Ia::AUTH_PROFILE_VIP_AUTH, 'none' %>
+    VIP Access トークン
+    </div>
+    <div id='token_profile_box' style="display:none;">
+      <table class="edit_options">
+        <tr>
+          <th colspan="2">
+            追加認証の際に、VIP Access トークンを利用できます。VIP Access トークンはフリーで利用可能なセキュリテリトークンです。
+            （スマートフォン各マーケットで"VIP Access"で検索して入手して下さい）<br />
+            トークンを入手後に以下に記載されている説明に従って、トークンの登録を行ってください。
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to image_tag("credential_id.jpg", :width=>80, :height=>120, :border=>0, :style=>"float:right;") -%>
+            <strong>Credential ID:</strong>
+            VIP Access トークンのCredential ID を入力してください。
+          </td>
+          <td>
+            <%= token_profile.text_field :auth_reference_id, :size => '30' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to image_tag("otp.jpg", :width=>80, :height=>120, :border=>0, :style=>"float:right;") -%>
+            <strong>Security Code:</strong>
+            VIP Access トークンで表示された Security Code を入力してください。
+          </td>
+          <td>
+            <%= text_field :new_token, :first_otp, :size => '30' %>
+          </td>
+        <tr>
+          <td>
+            <strong>"追加認証方式の保存"を押してください。</strong>
+          </td>
+        </tr>
+    <!-- VIP OCRA Token -->
+        <!--
+        <tr>
+          <td>
+          <a id="showDetails" style="FONT-WEIGHT: bold; COLOR: darkblue;"
+           href="javascript:ComponentControl.switchView('option_token_info', 'オプション')">OCRA オプションの表示</a>
+          </td>
+        </tr>
+        <tr>
+        <td>
+          <div id="option_token_info" style="display:none;">
+          	<%= render :partial => '/layouts/option_token_info' %>
+          </div>
+        </tr>
+        -->
+      </table>
+    </div>
+    <% end %>
+
+  <!-- クライアント証明書認証  -->
+    <%= fields_for :cert_profile do |cert_profile| %>
+    <div class="edit_options_head">
+      <%= cert_profile.check_box :auth_type, { :onclick => "Effect.toggle($('cert_profile_box'),'appear');" }, Ia::AUTH_PROFILE_CLIENT_CERT, 'none' %>
+         クライアント証明書認証
+    </div>
+    <div id='cert_profile_box' style="display:none;">
+      <table class="edit_options">
+        <tr>
+          <th colspan="2">
+                    クライアント証明書を取得することで証明書認証に使うことができます。証明書取得用コードは管理者より入手して下さい。
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <%= link_to image_tag("mpki-cert1.png", :width=>80, :height=>100, :border=>0, :style=>"float:right;") -%>
+            <strong>クライアント証明書取得用コード:</strong>　証明書取得用コードを入力してください。
+          </td>
+          <td>
+            <%= cert_profile.text_field :auth_reference_id, :size => '30' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>PKIクライアント:</strong>　PKIクライアントを利用する場合はチェックボックスをONにして下さい。
+          </td>
+          <td>
+          	<input id="pki_client" autocomplete="off" type="checkbox" name="pki_client" value="true"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>"追加認証方式の保存"を押してください。</strong>
+          </td>
+        </tr>
+        <% if @get_cert_uri -%>
+          <tr>
+            <th colspan="2" style="text-align: center;">
+              <font size="2">
+                <strong><%= link_to "証明書取得URL", @get_cert_uri, :target=>["_blank"] %></strong></br>
+                <%= link_to "トップページへ", [:destroy, :user_session] %>
+              </font>
+            </th>
+          </tr>
+        <% end -%>
+      </table>
+    </div>
+    <% end -%>
+
+    <div class="edit_submit">
+      <%= f.submit "追加認証方式の保存", :name => 'commit', :class => 'regButton' %>
+    </div>
+  <% end %>
+   <!-- 暫定 -->
+  <script type="text/javascript">
+    if ($('cert_profile_auth_type').checked) {
+      $('cert_profile_box').toggle();
+    }
+    if ($('token_profile_auth_type').checked) {
+      $('token_profile_box').toggle();
+    }
+  </script>
+
+</div>

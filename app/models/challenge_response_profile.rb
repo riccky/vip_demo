@@ -1,0 +1,2 @@
+class ChallengeResponseProfile < AuthProfile
+end

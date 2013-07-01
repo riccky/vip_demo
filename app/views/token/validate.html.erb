@@ -1,0 +1,43 @@
+<% content_for :menu do -%>
+  <div id="menu">
+    User: <b><%= current_user.username %></b>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+   <%= link_to 'IA の分析結果を確認', ia_result_details_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to "ログアウト", [:destroy, :user_session] %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="sidebar">
+  <%= render :partial => '/layouts/sidebar_menu' %>
+</div>
+
+<div id="content">
+  <h3>セキュリテリコードの認証が必要です</h3>
+  <p>
+    ログイン処理を継続するために、セキュリテリコードを入力して、
+    <strong>続ける</strong> ボタンをクリックしてください。
+  </p>
+  <%= content_tag :div, :id => 'notice' do -%>
+    <p><%= flash[:notice] %></p>
+  <% end if flash[:notice] -%>
+  <p style="margin-left: 200px;">
+    <%= link_to image_tag("otp.jpg", :border=>0) -%>
+  </p>
+  <%= form_tag :controller => 'token', :action => 'validate_otp' do %>
+    <div class="edit_options_head" style="text-align: center;">
+      Security Code:
+      <%= text_field :otp, :first_otp %>
+    </div>
+  	<div class="edit_options_head" style="text-align: center;">
+      　　　端末登録を実施する場合はチェックボックスをONにして下さい。:
+      <input id="rememberDevice" autocomplete="off" type="checkbox" name="rememberDevice" value="true"/>
+   	</div>
+   	<div class="edit_submit">
+      <input id="Tag" type="hidden" name="Tag" value=<%= @device_tag %> />
+      <%= submit_tag "続ける", :class => 'regButton', :id => 'otp_entry_submit', :name => 'commit', 
+      :onclick=>"IaDfp.writeTag(document.getElementById('Tag').value, document.getElementById('rememberDevice').checked); document.getElementById('ia_auth_data').value = IaDfp.readFingerprint();"%>
+      <input type="hidden" id="ia_auth_data" name="ia_auth_data" value="" />
+    </div>
+  <% end -%>
+</div>

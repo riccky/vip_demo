@@ -1,0 +1,253 @@
+<% content_for(:menu) do -%>
+  <div id="menu">
+    User: <b><%= current_user.username %></b>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to 'IA の分析結果を確認', ia_result_details_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to '追加認証方式の編集', auth_edit_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to '送金処理', transfer_money_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to "ログアウト", [:destroy, :user_session] %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="content_no_sidebar">
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="180" valign="top" class="sideback">
+        <table width="180" border="0" cellpadding="0" cellspacing="0"
+               class="infotable">
+          <tr class="infotable-head">
+            <td align="center" colspan="2">メッセージ</td>
+          </tr>
+          <tr class="infotable-odd">
+            <td width="24"><%= link_to image_tag("sidearrowodd.jpg", :border => 0) -%></td>
+            <td width="100%">3 つのメッセージ (0 Unread)</td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidedoteven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Payment to account 126634</u></td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidedoteven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>3% APR on new auto loans</u></td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidedoteven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Privacy policy updates</u></td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+        <table width="180" border="0" cellpadding="0" cellspacing="0"
+               class="infotable">
+          <tr class="infotable-head">
+            <td align="center" colspan="2">リンク</td>
+          </tr>
+          <tr class="infotable-odd">
+
+            <td width="24"><%= link_to image_tag("sidearrowodd.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Add an Account</u></td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidearroweven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Online Statements</u></td>
+          </tr>
+          <tr class="infotable-odd">
+
+            <td width="24"><%= link_to image_tag("sidearrowodd.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Notifications</u></td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+        <table width="180" border="0" cellpadding="0" cellspacing="0"
+               class="infotable">
+          <tr class="infotable-head">
+
+            <td align="center" colspan="3">本日のレート</td>
+          </tr>
+          <tr class="infotable-odd">
+            <td colspan="3" align="center">Rates for:&nbsp;
+              <select name="select"
+                      style="height:20px;width:100px;font-size:11px">
+                <option>Checking</option>
+              </select>
+
+            </td>
+          </tr>
+          <tr class="infotable-even">
+            <td><u>Balance</u></td>
+            <td><u>Rate</u></td>
+            <td><u>Yield</u></td>
+          </tr>
+
+          <tr class="infotable-even">
+            <td>$0 - $4,999</td>
+            <td>0.10%</td>
+            <td>0.10%</td>
+          </tr>
+          <tr class="infotable-even">
+            <td>$5,000 - $9,999</td>
+
+            <td>0.15%</td>
+            <td>0.15%</td>
+          </tr>
+          <tr class="infotable-even">
+            <td>$10,000 - $24,999</td>
+            <td>0.20%</td>
+            <td>0.20%</td>
+
+          </tr>
+          <tr class="infotable-even">
+            <td>$25,000 - $49,999</td>
+            <td>0.25%</td>
+            <td>0.25%</td>
+          </tr>
+          <tr class="infotable-even">
+
+            <td>$50,000 and Above</td>
+            <td>0.30%</td>
+            <td>0.30%</td>
+          </tr>
+        </table>
+      </td>
+      <td width="10">&nbsp;</td>
+      <td width="510" valign="top">
+        <%= content_tag(:div, :id => 'notice')  do -%>
+          <%= flash[:notice] %>
+        <% end if flash[:notice] -%>
+        <% if false %>
+        TODO 3
+        <h3><%= current_user.login %> 様のアカウントでログインしています</h3>
+        <% end %>
+        <table width="510" border="0" cellpadding="0" cellspacing="0" class="gentable">
+
+          <tr class="gentable-head">
+            <td align="left" colspan="5" class="gentable-head">Account Summary</td>
+          </tr>
+          <tr class="gentable-colhead">
+            <td align="center" width="75" class="gentable-border">Account ID</td>
+            <td align="center" width="75" class="gentable-border">Type</td>
+            <td align="center" width="75" class="gentable-border">Dividends</td>
+
+            <td align="center" width="140" class="gentable-border">Balance</td>
+            <td align="center" width="143" class="gentable-border">Available
+            Balance</td>
+          </tr>
+          <tr class="gentable-odd">
+            <td align="center" class="gentable-border"><u>107882</u></td>
+            <td align="center" class="gentable-border">Checking</td>
+            <td align="center" class="gentable-border">0.10%</td>
+
+            <td align="right" class="gentable-border">$3,619.23</td>
+            <td align="right" class="gentable-border">$3,569.23</td>
+          </tr>
+          <tr class="gentable-even">
+            <td align="center" class="gentable-border"><u>117725</u></td>
+            <td align="center" class="gentable-border">Joint Checking</td>
+            <td align="center" class="gentable-border">0.20%</td>
+
+            <td align="right" class="gentable-border">$12,857.65</td>
+            <td align="right" class="gentable-border">$12,807.65</td>
+          </tr>
+          <tr class="gentable-odd">
+            <td align="center" class="gentable-border"><u>107933</u></td>
+            <td align="center" class="gentable-border">Savings</td>
+            <td align="center" class="gentable-border">2.10%</td>
+
+            <td align="right" class="gentable-border">$24,637.56</td>
+            <td align="right" class="gentable-border">$24,537.56</td>
+          </tr>
+          <tr class="gentable-even">
+            <td align="center" class="gentable-border"><u>110007</u></td>
+            <td align="center" class="gentable-border">Investment</td>
+            <td align="center" class="gentable-border">2.70%</td>
+
+            <td align="right" class="gentable-border">$57,263.11</td>
+            <td align="right" class="gentable-border">$57,263.11</td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+        <table width="510" border="0" cellpadding="0" cellspacing="0" class="gentable">
+          <tr class="gentable-head">
+            <td align="left" colspan="6" class="gentable-head">Loan Summary</td>
+
+          </tr>
+          <tr class="gentable-colhead">
+            <td align="center" width="75" class="gentable-border">Account ID</td>
+            <td align="center" width="75" class="gentable-border">Type</td>
+            <td align="center" width="110" class="gentable-border">Payment Due</td>
+            <td align="center" width="90" class="gentable-border">Date Due</td>
+            <td align="center" width="50" class="gentable-border">APR</td>
+
+            <td align="center" width="110" class="gentable-border">Balance</td>
+          </tr>
+          <tr class="gentable-odd">
+            <td align="center" class="gentable-border"><u>126634</u></td>
+            <td align="center" class="gentable-border">Mortgage</td>
+            <td align="right" class="gentable-border">$2,355.32</td>
+            <td align="center" class="gentable-border">03/01/06</td>
+
+            <td align="center" class="gentable-border">6.375%</td>
+            <td align="right" class="gentable-border">$343,256.16</td>
+          </tr>
+          <tr class="gentable-even">
+            <td align="center" class="gentable-border"><u>151125</u></td>
+            <td align="center" class="gentable-border">Auto</td>
+            <td align="right" class="gentable-border">$892.52</td>
+
+            <td align="center" class="gentable-border">03/15/06</td>
+            <td align="center" class="gentable-border">4.125%</td>
+            <td align="right" class="gentable-border">$12,075.46</td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+        <table width="510" border="0" cellpadding="0" cellspacing="0" class="gentable">
+          <tr class="gentable-head">
+
+            <td align="left" colspan="2" class="gentable-head">Quick Transfer</td>
+          </tr>
+          <tr class="gentable-odd">
+            <td align="right" width="60">From:&nbsp;&nbsp;</td>
+            <td align="left">
+              <select style="width:435px;height:20px;font-size:11px">
+                <option>107882 - Checking</option>
+
+                <option>117725 - Joint Checking</option>
+                <option>107933 - Savings</option>
+                <option>110007 - Investment</option>
+              </select>
+            </td>
+          </tr>
+          <tr class="gentable-even">
+
+            <td align="right">To:&nbsp;&nbsp;</td>
+            <td align="left">
+              <select style="width:435px;height:20px;font-size:11px">
+                <option>107882 - Checking</option>
+                <option>117725 - Joint Checking</option>
+                <option>107933 - Savings</option>
+                <option>110007 - Investment</option>
+
+              </select>
+            </td>
+          </tr>
+          <tr class="gentable-odd">
+            <td align="right">Amount:&nbsp;&nbsp;</td>
+            <td align="left"><input type="text"
+                                      style="width:100px;height:20px;font-size:10px">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button"
+                                                         class="regButton"
+                                                       value="Transfer"></td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+  <br/>
+</div>

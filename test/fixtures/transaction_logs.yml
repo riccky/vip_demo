@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  request_id: MyString
+  user_id: 1
+  ip_address: MyString
+  user_agent: MyString
+  ia_auth_data: MyString
+  ia_result: MyText
+
+two:
+  request_id: MyString
+  user_id: 1
+  ip_address: MyString
+  user_agent: MyString
+  ia_auth_data: MyString
+  ia_result: MyText

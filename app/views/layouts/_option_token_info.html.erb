@@ -1,0 +1,23 @@
+<table>
+　　  <%= fields_for :token_profile do |token_profile| %>
+  　　  　<tr>
+    　　　　  <th colspan="2">
+            オプションとしてトランザクション署名のデモを実施できます。デモを実施する場合は OCRA トークンの登録が必要になりますので管理者までお言い付け下さい。
+    　　　　  </th>
+  　　　  </tr>
+  　　  　<tr>
+       <td>
+       	<strong>Credential ID:</strong>
+          　　　 <%= token_profile.text_field :ocra_id, :size => '30' %>
+       </td>
+     </tr>
+     <tr>
+       <td>
+         <strong>S/W トークン:</strong>　S/W トークンを利用する場合はチェックボックスをONにして下さい。
+       </td>
+       <td>
+       	 <input id="ocra_sw_id" autocomplete="off" type="checkbox" name="ocra_sw_id" value="true"/>
+       </td>
+     </tr>
+　　  <% end %>
+</table>

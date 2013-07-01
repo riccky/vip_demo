@@ -1,0 +1,17 @@
+<% content_for :menu do -%>
+  <div id="menu">
+    <%= link_to "トップページへ", [:destroy, :user_session] %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="sidebar">
+  <%= render :partial => '/layouts/sidebar_menu' %>
+</div>
+
+<div id="content">
+  <h2>ログイン処理を中止しました</h2>
+  <p>お客様のログイン情報に問題があるため、サイトへのアクセスを中止しました。</p>
+  <p>詳しくは、カスタマーサポートへお問い合わせ下さい。</p>
+  <p>03-9999-0000</p>
+  <p><%= link_to 'トップページへ', root_path  %></p>
+</div>

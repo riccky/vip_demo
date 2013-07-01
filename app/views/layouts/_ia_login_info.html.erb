@@ -1,0 +1,45 @@
+<table class="wizardTable" cellspacing="0" cellpadding="5">
+  <%= fields_for @ia_login_transaction_log do |ia_login| %>
+    <%= ia_login.hidden_field :request_id, :value => request_id %>
+    </script>
+    <tr>
+      <th class="paneHeader" nowrap colspan="2">
+        <strong><%= title %></strong>
+      </th>
+    </tr>
+    <tr>
+      <th align="left" nowrap>
+        IP アドレス:
+      </th>
+      <td>
+        <%= ia_login.select :ip_address, @ip_addresses %>
+      </td>
+    </tr>
+    <tr>
+      <th align="left" nowrap>
+       	ユーザエージェント:
+      </th>
+      <td align="left">
+        <%= ia_login.select :user_agent, @user_agents %>
+      </td>
+    </tr>
+    <% if addtional_options -%>
+      <tr>
+        <th align="left" nowrap>
+          	強制的に追加認証を行う:<br />(for test purpose only)
+        </th>
+        <td>
+          <%= ia_login.check_box :force_challenge, {}, "true", "false"  %>
+        </td>
+      </tr>
+      <tr>
+        <th align="left" nowrap>
+          IA での検証をスキップする:
+        </th>
+        <td>
+          <%= ia_login.check_box :do_not_validate, {}, "true", "false" %>
+        </td>
+      </tr>
+    <% end -%>
+  <% end -%>
+</table>

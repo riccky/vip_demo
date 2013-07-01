@@ -1,0 +1,120 @@
+<% content_for :menu do -%>
+  <div id="menu">
+    <%= link_to "アカウントの開設", [:new, :user_registration] %>&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= user_signed_in? ? link_to("ログアウト", [:destroy, :user_session]) : link_to("ログイン", [:new, :user_session]) %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="content_no_sidebar">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <table cellspacing="2" cellpadding="2" border="0" width="700">
+      <tr class="xtrasmtxtBl-White">
+        <%  ['Personal Banking', 'Small Business', 'Corporate Banking', 'Investment Services'].each do |sub_menu| -%>
+          <td width="165" bgcolor="#004488" align="center">
+            <div align="center"><%= sub_menu %></div>
+          </td>
+        <% end -%>
+      </tr>
+      <tr>
+        <td rowspan="2" valign="top" bgcolor="#CBD1E2">
+          <div align="center">
+            <%= link_to image_tag("signin2.gif", :alt=>"", :width=>163, :height=>33, :border=>0) -%>
+          </div>
+          <table cellpadding="3" width="165">
+            <tr>
+              <td valign="top">
+                <%= content_tag(:div, :id => 'notice') do -%>
+                  <%= flash[:notice] %>
+                <% end if flash[:notice] -%>
+                <!-- Add Device Fingerprint Form Element -->
+                <input type="hidden" name="ia_auth_data" id="ia_auth_data" />
+                <p><label for="login">ユーザ ID</label><br />
+                <%= f.text_field 'login', :size => '25' %></p>
+                <p><label for="password">パスワード</label><br />
+                <%= f.password_field 'password', :size => '25' %></p>
+                <p>
+                  <%= link_to image_tag("SYM_VIP_3L_RGB.jpg", :border=>0, :style=>"float:left;margin-right:20px;") -%>
+                  <%= submit_tag 'Log in', :onclick=>"document.getElementById('ia_auth_data').value=IaDfp.readFingerprint();return true;", :class => 'regButton' %>
+                </p>
+                <!-- Populate Device Fingerprint Form Element Before Submitting Sign-in Form -->
+                <p>
+                  <%= link_to '証明書ログイン', :controller => 'top', :action => 'cert' %>
+                </p>
+                <p class="login_link">
+                  <%= link_to 'ユーザID、パスワードを忘れました?', :controller => 'top', :action => 'recover' %>
+                </p>
+                <p class="login_link">
+                  <%= link_to 'アカウントの開設', [:new, :user_registration] %>
+                </p>
+              </td>
+            </tr>
+          </table>
+          <div align="center"><br/>
+            <img src="/assets/signin3.gif" width="163" height="35"><br/>
+            <br/>
+            <select name="OtherServices" style="width:150px">
+              <option value="1">Online Investing</option>
+              <option value="2">Mortgage Account</option>
+              <option value="3">-- Other Services --</option>
+            </select>
+          </div><br/>
+          <div align="right">
+            <input type="button" class="button" name="other" id="other" value="    Go    ">&nbsp;&nbsp;<br/><br/>
+          </div>
+        </td>
+        <td colspan="2" valign="top" style="padding-left:10px;">
+          <%= render :partial => 'contents'  %>
+        </td>
+        <td valign="top" bgcolor="#8B9DBE">
+          <div align="center"><%= link_to image_tag("side.jpg", :align=>"top") -%><br/>
+            <br/>
+            <span class="xtrasmtxt"><span class="white">View Today's Rates</span></span><br/><br/>
+            <select name="Rates" style="width:148px">
+              <option value="1">Mortgage</option>
+              <option value="2">Checking</option>
+              <option value="3">Savings</option>
+              <option value="4">CDs</option>
+              <option value="5">Home Equity</option>
+              <option value="6">Personal Loans</option>
+              <option value="7">----- Other Rates ------</option>
+            </select>
+            <br/>
+            <br/>
+            <div align="right">
+              <input type="button" class="button" name="other2" id="other2" value="    Go    ">&nbsp;&nbsp;
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td height="120" colspan="3" bgcolor="#4D6191">
+          <div align="center">
+            <%= link_to image_tag("ad1.jpg", :align=>"middle") -%>&nbsp;&nbsp;&nbsp;<%= link_to image_tag("ad2.jpg", :align=>"middle") -%>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <table cellpadding="5" cellspacing="0" width="700">
+      <tr>
+        <td>
+          <a id="showDetails" style="FONT-WEIGHT: bold; COLOR: darkblue;"
+             href="javascript:ComponentControl.switchView('ia_login_info', 'ログイン詳細情報')">ログイン詳細情報の表示</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <div id="ia_login_info" style="display:none;">
+          <%= render :partial => '/layouts/ia_login_info',
+            :locals => { :request_id => 'abcd1234',
+           	 :title => '以下の情報でログイン情報をシュミレートします',
+           	 :addtional_options => true } %>
+        </div>
+      </tr>
+    </table>
+    <script type="text/javascript">
+      ComponentControl.setFocus('login')
+    </script>
+  <% end -%>
+</div>

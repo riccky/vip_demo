@@ -1,0 +1,89 @@
+<% content_for :menu do -%>
+  <div id="menu">
+    User: <b><%= current_user.username %></b>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+   <%= link_to 'IA の分析結果を確認', ia_result_details_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to "ログアウト", [:destroy, :user_session] %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="sidebar">
+  <%= render :partial => '/layouts/sidebar_menu' %>
+</div>
+
+<div id="content">
+  <h3>レスポンスコードの入力が必要です。</h3>
+  <%= content_tag :div, :id => 'notice' do -%>
+    <p><%= flash[:notice] %></p>
+  <% end if flash[:notice] -%>
+  <p>
+   <%= @msg  %>
+  </p>
+  	<% if @ocra_sw == "true" -%>
+  	  <p style="margin-left: 70px;">
+	  	<%= link_to image_tag(@qr_str, :border=>0, :vspace=>70, :hspace=>10) -%>
+	  	<%= link_to image_tag("arrow.png", :border=>0, :vspace=>90, :hspace=>15) -%>
+	    <%= link_to image_tag("ocra-sw-input1.png", :border=>0, :hspace=>10) -%>
+	  </p>
+	  送金内容を確認後に"Generate Responseボタン"を押してレスポンスコードを表示して下さい。
+  	<% else %>
+  	  <p style="margin-left: 200px;">
+        <%= link_to image_tag("ocra-card-input.jpg", :border=>0) -%>
+      </p>
+    <% end %>
+  <div class="edit_options_head" style="text-align: center;">
+  	<% if @last_result -%>
+  	  <% if @ocra_sw == "true" -%>
+  	    <% if @moving_factor %>
+  	    <tr>
+  	    	<th><a id="送金時刻">送金時刻: </a></th>
+  	    	<td><%=h @moving_factor %></td></br>
+      	</tr>
+      	<% end %>
+  	    <% if @last_result.bank_code %>
+  	    <tr>
+  	    	<th><a id="BANKCODE">金融機関コード: </a></th>
+  	    	<td><%=h @last_result.bank_code %></td></br>
+      	</tr>
+      	<% end %>
+      <% end %>
+      <% if @last_result.dst_account %>
+      <tr>
+      	<th><a id="DSTACCOUNT">送金先口座: </a></th>
+       	<td><%=h @last_result.dst_account  %></td></br>
+      </tr>
+      <% end %>
+      <% if @last_result.amount  %>　　
+      	<tr>
+        	<th><a id="AMOUNT">送金額: </a></th>
+        	<td><%=h @last_result.amount  %></td> 円
+      	</tr>
+      <% end %>
+　　	<% end -%>
+  </div>
+  	<% if @ocra_sw == "true" -%>
+  	<p style="margin-left: 30px;">
+  	  <%= link_to image_tag("ocra-sw-output1.png", :border=>0) -%>
+ 	  <%= link_to image_tag("arrow.png", :border=>0, :vspace=>90, :hspace=>15) -%>
+      <%= link_to image_tag("ocra-sw-output2.png", :border=>0, :hspace=>10) -%>
+  	<% else %>
+  	<p style="margin-left: 200px;">
+      <%= link_to image_tag("ocra-card-output.jpg", :border=>0) -%>
+    <% end %>
+  </p>
+  <p>
+    　表示された数字を入力して <strong>続ける</strong> ボタンをクリックしてください。
+  </p>
+
+  <%= form_tag :controller => 'ocra', :action => 'validate_cr' do %>
+    <div class="edit_options_head" style="text-align: center;">
+      	Response Code:
+      <%= text_field :otp, :response %>
+    </div>
+   	<div class="edit_submit">
+      <%= submit_tag "続ける", :class => 'regButton', :id => 'otp_entry_submit', :name => 'commit'%>
+      <input type="hidden" id="challenge" name="challenge" value=<%= @challenge %> />
+    </div>
+  <% end -%>
+</div>

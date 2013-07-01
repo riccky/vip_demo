@@ -1,0 +1,33 @@
+<% content_for :menu do -%>
+  <div id="menu">
+    <%= link_to "ログアウト", [:destroy, :user_session] %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="sidebar">
+  <%= render :partial => '/layouts/sidebar_menu' %>
+</div>
+
+<div id="content">
+  <h3>パスワード入力をお願いします。</h3>
+  <p>
+     パスワードを入力して
+    <strong>Log in</strong> ボタンをクリックしてください。
+  </p>
+  <%= content_tag :div, :id => 'notice' do -%>
+    <p><%= flash[:notice] %></p>
+  <% end if flash[:notice] -%>
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <%= f.hidden_field 'login', :value => @login %>
+    　　<div class="edit_options_head" style="text-align: center;">
+    　　　   ログインパスワード:
+    　　　　<%= f.password_field 'password' %>
+    　　</div>
+  　　　<div class="edit_submit">      		
+      <%= submit_tag "Log in", :class => 'regButton', :id => 'otp_entry_submit', :name => 'commit' %>
+    　　</div>
+  　　　<%= fields_for @ia_login_transaction_log do |ia_login| %>
+  　　　　　<%= ia_login.hidden_field :do_not_validate, :value => "true" %>
+  	<% end -%>
+　　<% end -%>
+</div>

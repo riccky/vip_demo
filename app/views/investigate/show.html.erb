@@ -1,0 +1,70 @@
+<% content_for :menu do -%>
+  <div id="menu">
+    <%= link_to "戻る", :back %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= user_signed_in? ? link_to("ログアウト", [:destroy, :user_session]) : link_to("ログイン", root_path) %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="content_no_sidebar">
+  <h1>IA の解析結果</h1>
+
+  <% if @last_result -%>
+    <p>以下の内容は今回のトランザクション処理において IA に送信を行った情報と IA から返された解析結果になります。</p>
+    <h3>リクエスト情報</h3>
+    <table class="ia_details">
+      <tr>
+        <th><a id="IP">IP</a></th>
+        <td><%=h @last_result.ip_address %></td>
+      </tr>
+      <tr>
+        <th><a id="USERAGENT">USERAGENT</a></th>
+        <td><%=h @last_result.user_agent %></td>
+      </tr>
+      <tr>
+        <th><a id="USERNAME">USERNAME</a></th>
+        <td><%=h current_user.username %></td>
+      </tr>
+      <% if @last_result.bank_code  %>
+      <tr>
+        <th><a id="BANKCODE">BANK CODE</a></th>
+        <td><%=h @last_result.bank_code  %></td>
+      </tr>
+      <% end %>
+      <% if @last_result.dst_account  %>
+      <tr>
+        <th><a id="DSTACCOUNT">送金先口座</a></th>
+        <td><%=h @last_result.dst_account  %></td>
+      </tr>
+      <% end %>
+      <% if @last_result.amount  %>
+      <tr>
+        <th><a id="AMOUNT">送金額</a></th>
+        <td><%=h @last_result.amount  %></td>
+      </tr>
+      <% end %>
+    </table>
+
+    <h3>IA から返された分析結果</h3>
+    <% ia_result = @last_result.ia_result -%>
+    <% if ia_result -%>
+      <table class="ia_details">
+        <% ia_result.keys.sort.each do |key| -%>
+          <tr>
+            <th><a id="<%= key %>"><%= key %></a></th>
+            <td><%=h ia_result[key] %></td>
+          </tr>
+        <% end -%>
+      </table>
+    <% else -%>
+      <p>
+        解析結果はありません。<br />
+        IA での検証をスキップしたか、IA で何からのトラブルが発生し、解析結果を取得できておりません。
+      </p>
+    <% end -%>
+  <% else -%>
+    <div id="notice">
+      <p>アカウントの開設直後は、まだ IA へのデータの送信を開始しておりませんので、再度ログインを行い、この画面の確認を行ってください。</p>
+    </div>
+  <% end -%>
+</div>

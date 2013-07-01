@@ -1,0 +1,159 @@
+<% content_for(:menu) do -%>
+  <div id="menu">
+    User: <b><%= current_user.username %></b>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to 'IA の分析結果を確認', ia_result_details_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to '追加認証方式の編集', auth_edit_path %>
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <%= link_to "ログアウト", [:destroy, :user_session] %>&nbsp;&nbsp;
+  </div>
+<% end -%>
+
+<div id="content_no_sidebar">
+  <table width="700" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="180" valign="top" class="sideback">
+        <table width="180" border="0" cellpadding="0" cellspacing="0"
+               class="infotable">
+          <tr class="infotable-head">
+            <td align="center" colspan="2">メッセージ</td>
+          </tr>
+          <tr class="infotable-odd">
+            <td width="24"><%= link_to image_tag("sidearrowodd.jpg", :border => 0) -%></td>
+            <td width="100%">3 つのメッセージ (0 Unread)</td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidedoteven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Payment to account 126634</u></td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidedoteven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>3% APR on new auto loans</u></td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidedoteven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Privacy policy updates</u></td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+        <table width="180" border="0" cellpadding="0" cellspacing="0"
+               class="infotable">
+          <tr class="infotable-head">
+            <td align="center" colspan="2">リンク</td>
+          </tr>
+          <tr class="infotable-odd">
+
+            <td width="24"><%= link_to image_tag("sidearrowodd.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Add an Account</u></td>
+          </tr>
+          <tr class="infotable-even">
+            <td width="24"><%= link_to image_tag("sidearroweven.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Online Statements</u></td>
+          </tr>
+          <tr class="infotable-odd">
+
+            <td width="24"><%= link_to image_tag("sidearrowodd.jpg", :border => 0) -%></td>
+            <td width="100%"><u>Notifications</u></td>
+          </tr>
+        </table>
+        <br/>
+        <br/>
+        <table width="180" border="0" cellpadding="0" cellspacing="0"
+               class="infotable">
+          <tr class="infotable-head">
+
+            <td align="center" colspan="3">本日のレート</td>
+          </tr>
+          <tr class="infotable-odd">
+            <td colspan="3" align="center">Rates for:&nbsp;
+              <select name="select"
+                      style="height:20px;width:100px;font-size:11px">
+                <option>Checking</option>
+              </select>
+
+            </td>
+          </tr>
+          <tr class="infotable-even">
+            <td><u>Balance</u></td>
+            <td><u>Rate</u></td>
+            <td><u>Yield</u></td>
+          </tr>
+
+          <tr class="infotable-even">
+            <td>$0 - $4,999</td>
+            <td>0.10%</td>
+            <td>0.10%</td>
+          </tr>
+          <tr class="infotable-even">
+            <td>$5,000 - $9,999</td>
+
+            <td>0.15%</td>
+            <td>0.15%</td>
+          </tr>
+          <tr class="infotable-even">
+            <td>$10,000 - $24,999</td>
+            <td>0.20%</td>
+            <td>0.20%</td>
+
+          </tr>
+          <tr class="infotable-even">
+            <td>$25,000 - $49,999</td>
+            <td>0.25%</td>
+            <td>0.25%</td>
+          </tr>
+          <tr class="infotable-even">
+
+            <td>$50,000 and Above</td>
+            <td>0.30%</td>
+            <td>0.30%</td>
+          </tr>
+        </table>
+      </td>
+      <td width="10">&nbsp;</td>
+      <td width="510" valign="top">
+      	<% if @ia_login_transaction_log -%>
+        <%= form_for(@user, :url => { :action => 'create' }) do |f| %>
+          <%= fields_for :money_transfer do |money_transfer| %>
+          <table width="510" border="0" cellpadding="0" cellspacing="0" class="gentable">
+            <tr class="gentable-head">
+
+              <td align="left" colspan="2" class="gentable-head">送金情報を入力してください</td>
+            </tr>
+            <tr class="gentable-odd">
+              <td align="right" width="100">金融機関コード:&nbsp;&nbsp;</td>
+              <td align="left">
+            　　　　　　　　  <%= money_transfer.text_field :bank_code, :size => '30' %>
+              </td>
+            </tr>
+            <tr class="gentable-even">
+              <td align="right" width="100">送金先口座:&nbsp;&nbsp;</td>
+              <td align="left">
+            　　　　　　　　  <%= money_transfer.text_field :dst_account, :size => '30' %>
+              </td>
+            </tr>
+            <tr class="gentable-odd">
+              <td align="right" width="100">送金額:&nbsp;&nbsp;</td>
+              <td align="left">
+            　　　　　　　　  <%= money_transfer.text_field :amount, :size => '20' %>
+              <% end %>
+              </td>
+            </tr>
+        </table>
+        <div class="edit_submit">
+   		  <%= f.submit "送金", :onclick=>"document.getElementById('ia_auth_data').value=IaDfp.readFingerprint();return true;",
+   		  :name => 'commit', :class => 'regButton' %>
+   		  <input type="hidden" id="ia_auth_data" name="ia_auth_data" value="" />
+   		</div>
+   		<% end %>
+  		<% else -%>
+    	  <div id="notice">
+      	    <p>アカウントの開設直後は、送金処理ができません。再度ログインを行ってください。</p>
+    	  </div>
+	   <% end %>
+      </td>
+    </tr>
+  </table>
+  <br/>
+</div>

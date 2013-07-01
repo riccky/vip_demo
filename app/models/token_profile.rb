@@ -1,0 +1,2 @@
+class TokenProfile < AuthProfile
+end

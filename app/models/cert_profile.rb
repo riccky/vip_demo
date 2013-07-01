@@ -1,0 +1,2 @@
+class CertProfile < AuthProfile
+end

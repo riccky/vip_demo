@@ -1,0 +1,2 @@
+class CallProfile < AuthProfile
+end

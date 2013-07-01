@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  auth_type: MyString
+  user_id: 1
+  auth_reference_id: MyString
+  type: 
+
+two:
+  auth_type: MyString
+  user_id: 1
+  auth_reference_id: MyString
+  type: 
